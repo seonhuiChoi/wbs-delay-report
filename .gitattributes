@@ -1,0 +1,15 @@
+# 줄바꿈 정규화 — 저장소에는 LF, 체크아웃 시 OS 기본값
+* text=auto
+
+# 바이너리 (diff/머지 시도하지 않음)
+*.xlsx binary
+*.xls  binary
+*.png  binary
+*.jpg  binary
+*.pdf  binary
+
+# CSV는 UTF-8 BOM을 유지해야 엑셀에서 한글이 깨지지 않는다
+*.csv text eol=crlf working-tree-encoding=UTF-8
+
+# GitHub 언어 통계에서 제외 (문서 저장소이지 웹 프로젝트가 아님)
+index.html linguist-documentation

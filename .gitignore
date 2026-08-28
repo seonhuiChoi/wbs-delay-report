@@ -1,0 +1,22 @@
+# Office 임시/잠금 파일 (문서를 열어두면 생김)
+~$*
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 편집기
+.vscode/
+.idea/
+*.swp
+
+# 실제 프로젝트 데이터는 절대 커밋하지 않는다.
+# 이 저장소에 포함된 데이터는 전부 가상의 예시다.
+/private/
+/real/
+**/*_실데이터*
+**/*_원본*
+**/*_export_*.xls*
+**/*_download_*.xls*
