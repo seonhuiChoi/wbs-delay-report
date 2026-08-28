@@ -1,0 +1,344 @@
+<title>AI 스케줄 구축 임원보고</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap">
+
+<style>
+:root{
+  --paper:#F4F6FA; --sheet:#FFFFFF; --tint:#EDF1F8; --tint2:#E3E9F4;
+  --ink:#10162B; --slate:#5D6885; --slate2:#7C87A0;
+  --rule:#D7DEEB; --rule2:#E6EBF3;
+  --cobalt:#1E3FA6; --cobalt-ink:#16307D; --cobalt-soft:#E7EDFB;
+  --ok:#0F7A55;   --ok-soft:#E2F1EA;
+  --warn:#A2680A; --warn-soft:#F8EFDC;
+  --late:#B23B2E; --late-soft:#F9E7E4;
+  --on-fill:#FFFFFF;
+  --fs-d:'Hahmlet','Nanum Myeongjo','Batang',serif;
+  --fs-b:'IBM Plex Sans KR','Malgun Gothic','Apple SD Gothic Neo',sans-serif;
+  --fs-m:'IBM Plex Mono','D2Coding',Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0E19; --sheet:#131A2B; --tint:#1A2235; --tint2:#222C42;
+    --ink:#E9EDF6; --slate:#9AA5BE; --slate2:#7E8AA8;
+    --rule:#2A3349; --rule2:#202839;
+    --cobalt:#8CA7FF; --cobalt-ink:#B3C4FF; --cobalt-soft:#1A2547;
+    --ok:#4FC194;   --ok-soft:#123027;
+    --warn:#E2A93E; --warn-soft:#332715;
+    --late:#F2806F; --late-soft:#3A1F1B;
+    --on-fill:#0A0E19;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0A0E19; --sheet:#131A2B; --tint:#1A2235; --tint2:#222C42;
+  --ink:#E9EDF6; --slate:#9AA5BE; --slate2:#7E8AA8;
+  --rule:#2A3349; --rule2:#202839;
+  --cobalt:#8CA7FF; --cobalt-ink:#B3C4FF; --cobalt-soft:#1A2547;
+  --ok:#4FC194;   --ok-soft:#123027;
+  --warn:#E2A93E; --warn-soft:#332715;
+  --late:#F2806F; --late-soft:#3A1F1B;
+  --on-fill:#0A0E19;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--fs-b); font-size:11px; line-height:1.45;
+  -webkit-font-smoothing:antialiased; padding:16px 12px;
+}
+h1,h2,h3{margin:0; font-weight:600; text-wrap:balance}
+p{margin:0}
+.mono{font-family:var(--fs-m); font-variant-numeric:tabular-nums}
+
+.sheet{
+  width:210mm; min-height:297mm; margin:0 auto; background:var(--sheet);
+  padding:8mm 9mm; display:flex; flex-direction:column; gap:4px;
+  box-shadow:0 2px 18px rgba(16,22,43,.14); border-radius:3px;
+}
+
+/* ---------- header ---------- */
+.hd{display:flex; align-items:flex-start; gap:14px; padding-bottom:7px; border-bottom:2px solid var(--ink)}
+.hd-l{flex:1}
+.eyebrow{font-family:var(--fs-m); font-size:9px; letter-spacing:.16em; color:var(--slate2)}
+.hd h1{font-family:var(--fs-d); font-size:16px; letter-spacing:-.02em; margin-top:3px}
+.hd-sub{font-size:10px; color:var(--slate); margin-top:2px}
+.hd-r{text-align:right; white-space:nowrap}
+.badge{
+  display:inline-block; font-family:var(--fs-m); font-size:10px; font-weight:600;
+  letter-spacing:.08em; color:var(--on-fill); background:var(--late);
+  padding:3px 10px; border-radius:3px;
+}
+.hd-date{font-family:var(--fs-m); font-size:11px; color:var(--slate); margin-top:5px}
+
+/* ---------- lead ---------- */
+.lead{
+  background:var(--late-soft); border-left:3px solid var(--late);
+  padding:6px 11px; border-radius:0 5px 5px 0; font-size:11px; line-height:1.5;
+}
+.lead b{font-weight:600}
+
+/* ---------- kpi ---------- */
+.kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:6px}
+.kpi{border:1px solid var(--rule); border-radius:5px; padding:6px 9px; background:var(--sheet)}
+.kpi-k{font-family:var(--fs-m); font-size:8.5px; letter-spacing:.07em; color:var(--slate2)}
+.kpi-v{font-size:16px; font-weight:600; letter-spacing:-.03em; margin:1px 0; font-variant-numeric:tabular-nums}
+.kpi-s{font-size:9px; color:var(--slate); font-variant-numeric:tabular-nums}
+
+/* ---------- section title ---------- */
+.st{
+  display:flex; align-items:baseline; gap:8px; margin-top:1px;
+  font-family:var(--fs-d); font-size:12px; font-weight:600;
+}
+.st i{font-family:var(--fs-m); font-size:10px; font-style:normal; color:var(--cobalt); font-weight:600}
+.st .note{margin-left:auto; font-family:var(--fs-b); font-size:10px; font-weight:400; color:var(--slate2)}
+
+/* ---------- fork ---------- */
+.fork{display:grid; grid-template-columns:1fr 1fr; gap:7px}
+.br{border:1px solid var(--rule); border-radius:6px; overflow:hidden}
+.br-h{padding:5px 10px; font-size:10.5px; font-weight:600; display:flex; align-items:baseline; gap:7px}
+.br-h .tag{font-family:var(--fs-m); font-size:9px; padding:1px 6px; border-radius:3px; color:#fff}
+.br.no .br-h{background:var(--late-soft); color:var(--late)}
+.br.no .br-h .tag{background:var(--late); color:var(--on-fill)}
+.br.yes .br-h{background:var(--ok-soft); color:var(--ok)}
+.br.yes .br-h .tag{background:var(--ok); color:var(--on-fill)}
+.br-b{padding:7px 10px}
+.step{display:grid; grid-template-columns:48px 1fr; gap:7px; padding:1px 0; font-size:10px; align-items:baseline}
+.step .d{font-family:var(--fs-m); font-size:10.5px; font-weight:600; color:var(--slate)}
+.br.no .step.key .d, .br.no .step.key span{color:var(--late); font-weight:600}
+.br.yes .step.key .d, .br.yes .step.key span{color:var(--ok); font-weight:600}
+.br-f{
+  margin:5px 10px 8px; padding:5px 9px; border-radius:4px; font-size:11px;
+  font-weight:600; text-align:center;
+}
+.br.no .br-f{background:var(--late); color:var(--on-fill)}
+.br.yes .br-f{background:var(--ok); color:var(--on-fill)}
+
+/* ---------- cause ---------- */
+.causes{display:flex; flex-direction:column; gap:0; border:1px solid var(--rule); border-radius:6px; overflow:hidden}
+.cz{display:grid; grid-template-columns:20px 1fr 92px 46px; gap:9px; align-items:center;
+    padding:4px 10px; border-bottom:1px solid var(--rule2); font-size:10.5px}
+.cz:last-child{border-bottom:none}
+.cz.sum{background:var(--tint); font-weight:600}
+.cz-n{font-family:var(--fs-m); font-size:10px; color:var(--cobalt); font-weight:600}
+.cz-t b{font-weight:600}
+.cz-t small{display:block; font-size:9.5px; color:var(--slate2); margin-top:0; line-height:1.4}
+.cz-bar{height:7px; background:var(--tint2); border-radius:4px; overflow:hidden}
+.cz-bar i{display:block; height:100%; border-radius:4px}
+.cz-d{font-family:var(--fs-m); font-size:11.5px; font-weight:600; text-align:right; font-variant-numeric:tabular-nums}
+
+/* ---------- ask ---------- */
+.asks{border:1px solid var(--cobalt); border-radius:6px; overflow:hidden}
+.ask-h{background:var(--cobalt); color:var(--on-fill); padding:5px 11px; font-size:11px; font-weight:600;
+       display:flex; align-items:baseline; gap:8px}
+.ask-h .r{margin-left:auto; font-family:var(--fs-m); font-size:10px; font-weight:400; opacity:.85}
+table{width:100%; border-collapse:collapse}
+th{font-family:var(--fs-m); font-size:8.5px; letter-spacing:.06em; color:var(--slate2);
+   text-align:left; padding:5px 10px; border-bottom:1px solid var(--rule); background:var(--tint)}
+td{padding:5px 9px; border-bottom:1px solid var(--rule2); font-size:10.5px; vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+.num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; font-family:var(--fs-m)}
+td b{font-weight:600}
+td small{display:block; font-size:9.5px; color:var(--slate2); margin-top:1px; line-height:1.4}
+.pri{font-family:var(--fs-m); font-size:10px; font-weight:600; color:var(--on-fill); background:var(--late);
+     border-radius:3px; padding:1px 6px; white-space:nowrap}
+.pri.n{background:var(--slate2)}
+
+/* ---------- close ---------- */
+.close{display:grid; grid-template-columns:1.5fr 1fr; gap:8px; margin-top:auto}
+.verdict{
+  background:var(--cobalt-soft); border:1px solid var(--cobalt);
+  border-radius:6px; padding:8px 11px; font-size:10.5px; line-height:1.5;
+}
+.verdict b{font-weight:600; color:var(--cobalt-ink)}
+.cost{border:1px solid var(--rule); border-radius:6px; overflow:hidden}
+.cost-r{display:flex; justify-content:space-between; padding:4px 10px;
+        border-bottom:1px solid var(--rule2); font-size:10.5px}
+.cost-r:last-child{border-bottom:none}
+.cost-r b{font-family:var(--fs-m); font-weight:600; font-variant-numeric:tabular-nums}
+.cost-r.tot{background:var(--tint); font-weight:600}
+
+footer{
+  margin-top:6px; padding-top:5px; border-top:1px solid var(--rule);
+  display:flex; justify-content:space-between; gap:14px;
+  font-family:var(--fs-m); font-size:8.5px; color:var(--slate2);
+}
+
+@media (max-width:820px){
+  .sheet{width:100%; min-height:auto; padding:18px 15px}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .fork{grid-template-columns:1fr}
+  .close{grid-template-columns:1fr}
+  .cz{grid-template-columns:20px 1fr 46px}
+  .cz-bar{display:none}
+}
+@media print{
+  body{background:#fff; padding:0}
+  .sheet{width:auto; min-height:auto; box-shadow:none; border-radius:0; padding:11mm}
+}
+@page{size:A4 portrait; margin:0}
+</style>
+
+<div class="sheet">
+
+  <div class="hd">
+    <div class="hd-l">
+      <div class="eyebrow">임원 보고 · 프로젝트 현황 및 결재 요청</div>
+      <h1>점포 근태 · AI 스케줄 관리 시스템 구축</h1>
+      <div class="hd-sub">계약 500,000천원 · 2026-07-01 ~ 12-31 · 71개점 8,400명 · PM 나루 / PMO 미르</div>
+    </div>
+    <div class="hd-r">
+      <span class="badge">주의 · 조치 필요</span>
+      <div class="hd-date">기준일 2026-10-08 (목)<br>경과 100 / 184일 · 54.3%</div>
+    </div>
+  </div>
+
+  <p class="lead">
+    설계 마무리 국면에서 <b>지연 46일</b>이 누적됐습니다. 원인은 개발 지연이 아니라
+    <b>현업 의사결정 2건이 각각 20일 · 13일째 대기</b> 중인 데 있습니다.
+    이 프로젝트의 실질 마감은 계약 종료일이 아니라 <b>연말 성수기 IT 변경 동결 시작일(12-14)</b>이며,
+    <b>10-12 결재 3건</b>이 오픈 시점을 가릅니다.
+  </p>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kpi-k">진척률</div>
+      <div class="kpi-v">42.2<span style="font-size:13px">%</span></div>
+      <div class="kpi-s">계획 49.0% · 편차 −6.8%p</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-k">계획 대비 달성률</div>
+      <div class="kpi-v" style="color:var(--late)">86.1<span style="font-size:12px">%</span></div>
+      <div class="kpi-s">실적 42.2% ÷ 계획 49.0%</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-k">누적 지연</div>
+      <div class="kpi-v" style="color:var(--late)">46<span style="font-size:13px">일</span></div>
+      <div class="kpi-s">지연 과업 7건 · 회복 가능 35일</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-k">오픈 전망</div>
+      <div class="kpi-v" style="font-size:16px; margin-top:4px">01-11 <span style="font-size:11px; color:var(--slate)">/ 12-09</span></div>
+      <div class="kpi-s">무조치 <b>+38일</b> · 조치 시 방어</div>
+    </div>
+  </div>
+
+  <div class="st"><i>01</i> 결정 시점에 따른 두 가지 결과<span class="note">계획 오픈 12-04 · 변경 동결 12-14 ~ 2027-01-08</span></div>
+
+  <div class="fork">
+    <div class="br no">
+      <div class="br-h"><span class="tag">A</span> 10-12 결재가 지연되면</div>
+      <div class="br-b">
+        <div class="step"><span class="d">10-12</span><span>의사결정 계속 대기</span></div>
+        <div class="step"><span class="d">10-23</span><span>구현 착수 지연 확산</span></div>
+        <div class="step key"><span class="d">12-22</span><span>오픈 준비 완료 — 이미 동결 구간</span></div>
+        <div class="step"><span class="d">01-08</span><span>동결 해제 대기</span></div>
+      </div>
+      <div class="br-f">오픈 2027-01-11 · 계획 대비 +38일</div>
+    </div>
+    <div class="br yes">
+      <div class="br-h"><span class="tag">B</span> 10-12 결재가 완료되면</div>
+      <div class="br-b">
+        <div class="step"><span class="d">10-13</span><span>제약식 확정 · 구현 정상화</span></div>
+        <div class="step"><span class="d">10-26</span><span>기준정보 71개점 확보 완료</span></div>
+        <div class="step key"><span class="d">12-09</span><span>오픈 — 동결 2영업일 전 안착</span></div>
+        <div class="step"><span class="d">12-31</span><span>안정화 완료 · 계약 종료</span></div>
+      </div>
+      <div class="br-f">계약 종료일 12-31 방어</div>
+    </div>
+  </div>
+
+  <div class="st"><i>02</i> 지연 46일의 구성<span class="note">주원인 기준 · 중복 계상 없음</span></div>
+
+  <div class="causes">
+    <div class="cz">
+      <span class="cz-n">1</span>
+      <span class="cz-t"><b>특이근태 예외 처리 방침 미확정</b>
+        <small>자동편성 로직 수립 중 표준으로 판정 불가한 23종 도출 → 9종 확정 / 14종 대기 · 20일 경과</small></span>
+      <span class="cz-bar"><i style="width:85%;background:var(--late)"></i></span>
+      <span class="cz-d">11일</span>
+    </div>
+    <div class="cz">
+      <span class="cz-n">2</span>
+      <span class="cz-t"><b>필요인원 기준정보 미확보</b>
+        <small>71개점 중 44개점만 회신 · 미회신 27개점 중 16개점은 기준 자체가 부재 · 13일 경과</small></span>
+      <span class="cz-bar"><i style="width:100%;background:var(--late)"></i></span>
+      <span class="cz-d">13일</span>
+    </div>
+    <div class="cz">
+      <span class="cz-n">3</span>
+      <span class="cz-t"><b>위 1·2로 인한 AI 엔진 검증 미달 및 후속 개발 지연</b>
+        <small>1차 시뮬레이션 5개 지표 중 4개 미달 — 법정 근로시간 위반 0건으로 엔진 골격은 정상</small></span>
+      <span class="cz-bar"><i style="width:100%;background:var(--warn)"></i></span>
+      <span class="cz-d">13일</span>
+    </div>
+    <div class="cz">
+      <span class="cz-n">4</span>
+      <span class="cz-t"><b>그 밖 — 승인된 변경요청의 일정 미반영, 실무 액션 정체</b>
+        <small>고용노동부 가이드 개정 대응 +12MD가 일정에 미반영 상태(지표 왜곡 요인)</small></span>
+      <span class="cz-bar"><i style="width:69%;background:var(--cobalt)"></i></span>
+      <span class="cz-d">9일</span>
+    </div>
+    <div class="cz sum">
+      <span></span><span class="cz-t">합계 · 이 중 <b>24일(52%)이 현업 의사결정 대기</b></span>
+      <span></span><span class="cz-d">46일</span>
+    </div>
+  </div>
+
+  <div class="st"><i>03</i> 결재 요청<span class="note">10-12 · 3건</span></div>
+
+  <div class="asks">
+    <div class="ask-h">임원 결재가 필요한 안건<span class="r">회복 효과 합계 −34일</span></div>
+    <table>
+      <thead>
+        <tr><th style="width:34px">우선</th><th>안건</th><th class="num" style="width:52px">회복</th><th style="width:96px">결정 주체</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="pri">1순위</span></td>
+          <td><b>특이근태 예외 14종 처리 방침 확정</b>
+            <small>인사·점포운영·급여로 갈라진 결정 창구를 인사팀 단일 TF로 통합, 결정 SLA 3영업일 적용. 후속 2개 과업의 착수 조건입니다.</small></td>
+          <td class="num" style="color:var(--ok); font-weight:600">−18일</td>
+          <td>고객 인사팀</td>
+        </tr>
+        <tr>
+          <td><span class="pri n">2순위</span></td>
+          <td><b>미회신 27개점 필요인원 기준 확보</b>
+            <small>독촉으로는 해결되지 않습니다. 16개점은 기준을 만들어본 적이 없어 회신할 내용 자체가 없습니다. 본사 0.5 M/M으로 초안을 작성·배포합니다.</small></td>
+          <td class="num" style="color:var(--ok); font-weight:600">−9일</td>
+          <td>점포운영팀</td>
+        </tr>
+        <tr>
+          <td><span class="pri n">3순위</span></td>
+          <td><b>개발 인력 2명 증원 (2 M/M · 10-13 투입)</b>
+            <small>PL 1인이 동시 5개 과업 수행 중이며 일할당 1.40 M/D로 임계를 40% 초과합니다. 증원 후 3건으로 재분배합니다.</small></td>
+          <td class="num" style="color:var(--ok); font-weight:600">−7일</td>
+          <td>운영위원회</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="close">
+    <div class="verdict">
+      <b>1순위를 통과시키지 못하면 2·3순위를 모두 실행해도 동결 전 오픈이 불가능합니다.</b>
+      이 안건의 가치는 18일 단축이 아니라 <b>38일 이월을 막는 것</b>입니다.
+      실무 조치 2건(변경요청 재기준선 승인, 형평성 기준 상향)은 PMO에서 별도 처리합니다.
+    </div>
+    <div class="cost">
+      <div class="cost-r"><span>누적 지연</span><b style="color:var(--late)">46일</b></div>
+      <div class="cost-r"><span>회복 가능</span><b style="color:var(--ok)">35일</b></div>
+      <div class="cost-r"><span>잔여 지연</span><b>11일</b></div>
+      <div class="cost-r"><span>크리티컬 패스 영향</span><b>3일</b></div>
+      <div class="cost-r tot"><span>동결 전 오픈 여유</span><b style="color:var(--ok)">2영업일</b></div>
+    </div>
+  </div>
+  </div>
+
+  <footer>
+    <span>생성 2026-10-08 08:00 · 자동 배치</span>
+    <span>상세 근거 — 일일 지연원인 분석 리포트 (index.html)</span>
+    <span>본 자료의 데이터는 가상의 예시입니다</span>
+  </footer>
+
+</div>
