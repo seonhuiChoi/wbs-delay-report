@@ -2,7 +2,6 @@
 
 > **📊 실무 리포트 → https://seonhuichoi.github.io/wbs-delay-report/**
 > **📋 임원 보고(A4 1장) → https://seonhuichoi.github.io/wbs-delay-report/summary.html**
-> **📈 주간 추이 → https://seonhuichoi.github.io/wbs-delay-report/trend.html**
 > **🗓 08-28 기준 리포트 → https://seonhuichoi.github.io/wbs-delay-report/reports/20260828/**
 >
 > 저장소를 클론하지 않아도 위 링크에서 그대로 볼 수 있다.
@@ -21,7 +20,6 @@
 wbs/
 ├── index.html                          실무 리포트 — 지연 7건 근거·진단·처방
 ├── summary.html                        임원 보고 — A4 1장 요약 (인쇄 시 1페이지)
-├── trend.html                          기준일별 추이 — 08-28 · 09-11 · 09-18 · 10-08
 ├── snapshots/                          주간(금요일) 스냅샷 15주 × CSV 6종 + 추이요약
 ├── reports/                            기준일별 리포트
 │   └── 20260828/  index.html · summary.html
