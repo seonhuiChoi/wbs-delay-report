@@ -1,0 +1,198 @@
+<title>기준일별 진척 추이</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#F4F6FA;--sheet:#fff;--tint:#EDF1F8;--tint2:#E3E9F4;--ink:#10162B;
+  --slate:#5D6885;--slate2:#7C87A0;--rule:#D7DEEB;--rule2:#E6EBF3;
+  --cobalt:#1E3FA6;--cobalt-ink:#16307D;--cobalt-soft:#E7EDFB;
+  --ok:#0F7A55;--ok-soft:#E2F1EA;--warn:#A2680A;--warn-soft:#F8EFDC;
+  --late:#B23B2E;--late-soft:#F9E7E4;--on-fill:#fff;
+  --fs-d:'Hahmlet','Nanum Myeongjo',serif;--fs-b:'IBM Plex Sans KR','Malgun Gothic',sans-serif;
+  --fs-m:'IBM Plex Mono',Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0A0E19;--sheet:#131A2B;--tint:#1A2235;--tint2:#222C42;--ink:#E9EDF6;
+  --slate:#9AA5BE;--slate2:#7E8AA8;--rule:#2A3349;--rule2:#202839;
+  --cobalt:#8CA7FF;--cobalt-ink:#B3C4FF;--cobalt-soft:#1A2547;
+  --ok:#4FC194;--ok-soft:#123027;--warn:#E2A93E;--warn-soft:#332715;
+  --late:#F2806F;--late-soft:#3A1F1B;--on-fill:#0A0E19;}}
+:root[data-theme="dark"]{
+  --paper:#0A0E19;--sheet:#131A2B;--tint:#1A2235;--tint2:#222C42;--ink:#E9EDF6;
+  --slate:#9AA5BE;--slate2:#7E8AA8;--rule:#2A3349;--rule2:#202839;
+  --cobalt:#8CA7FF;--cobalt-ink:#B3C4FF;--cobalt-soft:#1A2547;
+  --ok:#4FC194;--ok-soft:#123027;--warn:#E2A93E;--warn-soft:#332715;
+  --late:#F2806F;--late-soft:#3A1F1B;--on-fill:#0A0E19;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--fs-b);
+  font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 0 60px}
+h1,h2,h3{margin:0;font-weight:600;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:1000px;margin:0 auto;padding:0 26px}
+header{padding:48px 0 30px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--fs-m);font-size:11px;letter-spacing:.16em;color:var(--slate2)}
+header h1{font-family:var(--fs-d);font-size:32px;letter-spacing:-.02em;margin-top:10px}
+header p{margin-top:12px;color:var(--slate);max-width:62ch;line-height:1.75}
+header p b{color:var(--ink);font-weight:600}
+section{padding:34px 0;border-bottom:1px solid var(--rule)}
+.st{display:flex;align-items:baseline;gap:10px;margin-bottom:16px;font-family:var(--fs-d);font-size:19px;font-weight:600}
+.st i{font-family:var(--fs-m);font-size:12px;font-style:normal;color:var(--cobalt);font-weight:600}
+.st .note{margin-left:auto;font-family:var(--fs-b);font-size:12px;font-weight:400;color:var(--slate2)}
+.tw{overflow-x:auto;border:1px solid var(--rule);border-radius:9px;background:var(--sheet)}
+table{width:100%;border-collapse:collapse;min-width:620px}
+th{font-family:var(--fs-m);font-size:11px;letter-spacing:.06em;color:var(--slate2);
+  text-align:left;padding:11px 14px;border-bottom:1px solid var(--rule);background:var(--tint);white-space:nowrap}
+th.num{text-align:right}
+td{padding:9px 14px;border-bottom:1px solid var(--rule2);font-size:13.5px}
+tbody tr:last-child td{border-bottom:none}
+td.num{text-align:right;font-family:var(--fs-m);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.num.w{color:var(--late);font-weight:600}
+td.lb{font-weight:500}
+td.lb small{display:block;font-size:11px;color:var(--slate2);font-weight:400;margin-top:1px}
+tbody tr:hover{background:var(--tint)}
+.hi td{background:var(--warn-soft)}
+.spark{display:inline-flex;align-items:flex-end;gap:3px;height:26px;margin-left:10px}
+.sp{display:inline-block;width:9px;height:100%;background:var(--tint2);border-radius:2px;position:relative;overflow:hidden}
+.sp i{position:absolute;bottom:0;left:0;width:100%;border-radius:2px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:820px){.cards{grid-template-columns:repeat(2,1fr)}}
+.cd{border:1px solid var(--rule);border-radius:9px;background:var(--sheet);padding:14px 16px}
+.cd.now{border-color:var(--late);border-width:2px}
+.cd-d{font-family:var(--fs-m);font-size:12px;font-weight:600;color:var(--cobalt)}
+.cd-v{font-size:26px;font-weight:600;letter-spacing:-.03em;margin:5px 0 1px;font-variant-numeric:tabular-nums}
+.cd-s{font-size:11.5px;color:var(--slate)}
+.cd-b{margin-top:9px;padding-top:8px;border-top:1px solid var(--rule2);font-size:11.5px;color:var(--slate2)}
+.cd-b b{font-family:var(--fs-m);color:var(--ink)}
+.chip{display:inline-block;font-family:var(--fs-m);font-size:10px;font-weight:500;
+  padding:2px 7px;border-radius:4px;border:1px solid transparent}
+.c-ok{background:var(--ok-soft);color:var(--ok);border-color:color-mix(in srgb,var(--ok) 28%,transparent)}
+.c-warn{background:var(--warn-soft);color:var(--warn);border-color:color-mix(in srgb,var(--warn) 28%,transparent)}
+.c-late{background:var(--late-soft);color:var(--late);border-color:color-mix(in srgb,var(--late) 28%,transparent)}
+.key{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:9px;padding:16px 20px;margin-top:18px}
+.key h3{font-size:15px;color:var(--warn);margin-bottom:8px}
+.key p{font-size:14px;line-height:1.75}
+.key b{font-weight:600}
+.pz{display:grid;grid-template-columns:180px 1fr 52px;gap:12px;align-items:center;
+  padding:7px 0;border-bottom:1px solid var(--rule2);font-size:13px}
+.pz:last-child{border-bottom:none}
+.pz-n{font-family:var(--fs-m);font-size:11.5px;color:var(--cobalt)}
+.pz-b{height:16px;background:var(--tint2);border-radius:4px;overflow:hidden}
+.pz-b i{display:block;height:100%;border-radius:4px}
+.pz-d{font-family:var(--fs-m);font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.dz{display:grid;grid-template-columns:62px 1fr 190px 52px;gap:12px;align-items:baseline;
+  padding:8px 0;border-bottom:1px solid var(--rule2);font-size:13px}
+.dz:last-child{border-bottom:none}
+.dz code{font-family:var(--fs-m);font-size:12px;color:var(--cobalt);font-weight:600}
+.dz-r{font-family:var(--fs-m);font-size:11px;color:var(--slate2)}
+.dz-d{font-family:var(--fs-m);font-weight:600;color:var(--late);text-align:right}
+@media(max-width:760px){.dz{grid-template-columns:62px 1fr 52px}.dz-r{grid-column:2/-1}}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.links a{font-size:13px;color:var(--cobalt);text-decoration:none;border:1px solid var(--rule);
+  border-radius:6px;padding:7px 13px;background:var(--sheet)}
+.links a:hover{background:var(--cobalt-soft)}
+footer{padding:26px 0;font-family:var(--fs-m);font-size:11px;color:var(--slate2);line-height:1.8}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header><div class="wrap">
+  <div class="eyebrow">기준일별 진척 추이 · 4개 시점 스냅샷</div>
+  <h1>지연은 갑자기 생기지 않았다</h1>
+  <p>같은 프로젝트를 <b>08-28 · 09-11 · 09-18 · 10-08</b> 네 시점에서 각각 분석했다.
+     세 번째 시점까지 <b>지연 TASK는 0건</b>이었다. WBS만 보면 문제가 없었다.
+     그런데 회의록의 미결사항은 <b>2 → 8 → 13 → 24건</b>으로 쌓이고 있었고,
+     3주 뒤 <b>지연 7건 46일</b>로 나타났다.</p>
+</div></header>
+
+<section><div class="wrap">
+  <div class="st"><i>01</i> 네 시점 요약<span class="note">각 스냅샷은 해당 일자까지의 데이터만 사용</span></div>
+  <div class="cards">
+    <div class="cd">
+      <div class="cd-d">2026-08-28 (금)</div>
+      <div class="cd-v">96.6<span style="font-size:15px">%</span></div>
+      <div class="cd-s">계획 대비 달성률</div>
+      <div class="cd-b">지연 <b>0건 / 0일</b><br>
+        미결 <b>2건</b> · 5일초과 <b>2건</b><br>
+        <span class="chip c-ok">정상</span></div>
+    </div><div class="cd">
+      <div class="cd-d">2026-09-11 (금)</div>
+      <div class="cd-v">94.9<span style="font-size:15px">%</span></div>
+      <div class="cd-s">계획 대비 달성률</div>
+      <div class="cd-b">지연 <b>0건 / 0일</b><br>
+        미결 <b>8건</b> · 5일초과 <b>3건</b><br>
+        <span class="chip c-warn">선행 경고</span></div>
+    </div><div class="cd">
+      <div class="cd-d">2026-09-18 (금)</div>
+      <div class="cd-v">93.4<span style="font-size:15px">%</span></div>
+      <div class="cd-s">계획 대비 달성률</div>
+      <div class="cd-b">지연 <b>0건 / 0일</b><br>
+        미결 <b>13건</b> · 5일초과 <b>6건</b><br>
+        <span class="chip c-warn">선행 경고</span></div>
+    </div><div class="cd now">
+      <div class="cd-d">2026-10-08 (목)</div>
+      <div class="cd-v">88.4<span style="font-size:15px">%</span></div>
+      <div class="cd-s">계획 대비 달성률</div>
+      <div class="cd-b">지연 <b>7건 / 46일</b><br>
+        미결 <b>24건</b> · 5일초과 <b>11건</b><br>
+        <span class="chip c-late">지연 발생</span></div>
+    </div>
+  </div>
+  <div class="key">
+    <h3>09-18 — 지연 0건인데 경고가 떠 있던 시점</h3>
+    <p>달성률 <b>93.4%</b>, 지연 TASK <b>0건</b>. 진척 보고만 보면 정상이다.
+       그런데 같은 날 회의록에는 미결 <b>13건</b>, 결정필요일 5영업일 초과 <b>6건</b>,
+       승인된 변경요청 중 일정 미반영 <b>1건</b>이 있었다.
+       <b>이 신호들이 3주 뒤 46일 지연의 원인이 된 항목들이다.</b>
+       WBS만 보는 관리 체계는 이 시점에 아무 경고도 낼 수 없다.</p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="st"><i>02</i> 진척 지표 추이</div>
+  <div class="tw"><table>
+    <thead><tr><th>지표</th><th class="num">08-28</th><th class="num">09-11</th><th class="num">09-18</th><th class="num">10-08</th></tr></thead>
+    <tbody><tr><td class="lb">경과율<small>기준일 / 총 184일</small></td><td class="num">32.1%</td><td class="num">39.7%</td><td class="num">43.5%</td><td class="num">54.3%</td></tr><tr><td class="lb">실적 진척률<small>가중 평균</small></td><td class="num">17.0%</td><td class="num">24.4%</td><td class="num">28.5%</td><td class="num">40.3%</td></tr><tr><td class="lb">계획 진척률<small>기준일 기준 자동계산</small></td><td class="num">17.6%</td><td class="num">25.7%</td><td class="num">30.5%</td><td class="num">45.6%</td></tr><tr><td class="lb">계획 대비 달성률<small>실적 ÷ 계획</small></td><td class="num">96.6%</td><td class="num">94.9%</td><td class="num">93.4%</td><td class="num">88.4%</td></tr><tr><td class="lb">진척 편차<small></small></td><td class="num">-0.6%p</td><td class="num">-1.3%p</td><td class="num">-2.0%p</td><td class="num">-5.3%p</td></tr></tbody>
+  </table></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="st"><i>03</i> 지연 지표 — 마지막 시점에야 나타난다
+    <span class="note">추이 <span class="spark"><span class="sp"><i style="height:0%;background:var(--late)"></i></span><span class="sp"><i style="height:0%;background:var(--late)"></i></span><span class="sp"><i style="height:0%;background:var(--late)"></i></span><span class="sp"><i style="height:100%;background:var(--late)"></i></span></span></span></div>
+  <div class="tw"><table>
+    <thead><tr><th>지표</th><th class="num">08-28</th><th class="num">09-11</th><th class="num">09-18</th><th class="num">10-08</th></tr></thead>
+    <tbody><tr><td class="lb">지연 TASK<small>기준일 &gt; 계획종료일 AND 진척 &lt; 100</small></td><td class="num">0건</td><td class="num">0건</td><td class="num">0건</td><td class="num">7건</td></tr><tr><td class="lb">누적 지연일수<small></small></td><td class="num">0일</td><td class="num">0일</td><td class="num">0일</td><td class="num">46일</td></tr></tbody>
+  </table></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="st"><i>04</i> 선행 지표 — 훨씬 먼저 움직인다
+    <span class="note">미결 추이 <span class="spark"><span class="sp"><i style="height:8%;background:var(--warn)"></i></span><span class="sp"><i style="height:33%;background:var(--warn)"></i></span><span class="sp"><i style="height:54%;background:var(--warn)"></i></span><span class="sp"><i style="height:100%;background:var(--warn)"></i></span></span></span></div>
+  <div class="tw"><table>
+    <thead><tr><th>지표</th><th class="num">08-28</th><th class="num">09-11</th><th class="num">09-18</th><th class="num">10-08</th></tr></thead>
+    <tbody><tr><td class="lb">회의록 누적<small></small></td><td class="num">5건</td><td class="num">9건</td><td class="num">12건</td><td class="num">17건</td></tr><tr><td class="lb">미결사항 누적<small>결정 대기 중인 안건</small></td><td class="num">2건</td><td class="num">8건</td><td class="num">13건</td><td class="num">24건</td></tr><tr><td class="lb">5영업일 초과 미결<small>RC-02 판정 임계</small></td><td class="num">2건</td><td class="num">3건</td><td class="num">6건</td><td class="num">11건</td></tr><tr><td class="lb">액션아이템 기한초과<small>지연영향 H 포함</small></td><td class="num">0건</td><td class="num">1건</td><td class="num">3건</td><td class="num">8건</td></tr><tr><td class="lb">미종결 이슈·리스크<small></small></td><td class="num">1건</td><td class="num">1건</td><td class="num">1건</td><td class="num">8건</td></tr><tr><td class="lb">CR 재기준선 미반영<small>V-08 치명 점검</small></td><td class="num">0건</td><td class="num">0건</td><td class="num">1건</td><td class="num">1건</td></tr></tbody>
+  </table></div>
+  <div class="key">
+    <h3>선행 지표는 지연보다 3~5주 앞선다</h3>
+    <p>지연일수는 <b>0 → 0 → 0 → 46</b>으로 마지막에 한 번에 뛴다. 관리 신호로 쓰기엔 너무 늦다.
+       반면 5영업일 초과 미결은 <b>2 → 3 → 6 → 11</b>로 <b>처음부터 계속 올라간다.</b>
+       09-11 시점에 이미 3건이었고, 그때 손을 썼다면 10-08의 46일 중 상당 부분은 발생하지 않았다.</p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="st"><i>05</i> 10-08 시점 지연 상세<span class="note">7건 / 46일</span></div>
+  <div class="dz"><code>4.6.1</code><span class="dz-n">편성 기준정보 정의 및 수집</span><span class="dz-r">RC-10 기준정보 미비</span><span class="dz-d">+13일</span></div><div class="dz"><code>4.3.2</code><span class="dz-n">근무유형·근태규칙 표준 코드 체계 설계</span><span class="dz-r">RC-02 의사결정 지연</span><span class="dz-d">+9일</span></div><div class="dz"><code>5.4.1</code><span class="dz-n">배정 최적화 – 제약 모델 구현</span><span class="dz-r">RC-03 선행공정 지연</span><span class="dz-d">+7일</span></div><div class="dz"><code>4.2.3</code><span class="dz-n">모바일 근태(출퇴근 체크) 화면 설계</span><span class="dz-r">RC-01 요건 변경</span><span class="dz-d">+6일</span></div><div class="dz"><code>4.6.2</code><span class="dz-n">배정 최적화 모델 설계 및 1차 시뮬레이션</span><span class="dz-r">RC-09 검증 미달</span><span class="dz-d">+6일</span></div><div class="dz"><code>5.1.4</code><span class="dz-n">점포·조직 권한 매트릭스 적용</span><span class="dz-r">RC-05 액션아이템 미이행</span><span class="dz-d">+3일</span></div><div class="dz"><code>3.2.2</code><span class="dz-n">근로시간 준수 규칙 요건 정의(주52h·휴게·탄력근로)</span><span class="dz-r">RC-02 의사결정 지연</span><span class="dz-d">+2일</span></div>
+  <div class="st" style="margin-top:26px"><i>06</i> 원인별 집계<span class="note">주원인 기준</span></div>
+  <div class="pz"><span class="pz-n">RC-10 기준정보 미비</span><span class="pz-b"><i style="width:28%;background:var(--late)"></i></span><span class="pz-d">13일</span></div><div class="pz"><span class="pz-n">RC-02 의사결정 지연</span><span class="pz-b"><i style="width:24%;background:var(--late)"></i></span><span class="pz-d">11일</span></div><div class="pz"><span class="pz-n">RC-03 선행공정 지연</span><span class="pz-b"><i style="width:15%;background:var(--late)"></i></span><span class="pz-d">7일</span></div><div class="pz"><span class="pz-n">RC-01 요건 변경</span><span class="pz-b"><i style="width:13%;background:var(--late)"></i></span><span class="pz-d">6일</span></div><div class="pz"><span class="pz-n">RC-09 검증 미달</span><span class="pz-b"><i style="width:13%;background:var(--late)"></i></span><span class="pz-d">6일</span></div><div class="pz"><span class="pz-n">RC-05 액션아이템 미이행</span><span class="pz-b"><i style="width:7%;background:var(--late)"></i></span><span class="pz-d">3일</span></div>
+  <div class="links">
+    <a href="index.html">→ 10-08 상세 리포트 (근거 체인·진단·처방)</a>
+    <a href="summary.html">→ 임원 보고 A4 1장</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  스냅샷 4종 · 각 시점의 WBS·회의록·액션아이템·이슈·변경요청 원본은 /snapshots 에 CSV로 제공<br>
+  본 자료의 데이터는 분석 방식 시연을 위한 가상의 예시입니다
+</div></footer>
