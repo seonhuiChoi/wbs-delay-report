@@ -2,7 +2,8 @@
 
 > **📊 실무 리포트 → https://seonhuichoi.github.io/wbs-delay-report/**
 > **📋 임원 보고(A4 1장) → https://seonhuichoi.github.io/wbs-delay-report/summary.html**
-> **📈 기준일별 추이(4시점) → https://seonhuichoi.github.io/wbs-delay-report/trend.html**
+> **📈 주간 추이 → https://seonhuichoi.github.io/wbs-delay-report/trend.html**
+> **🗓 08-28 기준 리포트 → https://seonhuichoi.github.io/wbs-delay-report/reports/20260828/**
 >
 > 저장소를 클론하지 않아도 위 링크에서 그대로 볼 수 있다.
 > 양식(`templates/`)과 설계문서(`design/`)는 저장소에서 내려받는다.
@@ -21,7 +22,9 @@ wbs/
 ├── index.html                          실무 리포트 — 지연 7건 근거·진단·처방
 ├── summary.html                        임원 보고 — A4 1장 요약 (인쇄 시 1페이지)
 ├── trend.html                          기준일별 추이 — 08-28 · 09-11 · 09-18 · 10-08
-├── snapshots/                          4개 시점 원본 스냅샷 CSV 20개
+├── snapshots/                          주간(금요일) 스냅샷 15주 × CSV 6종 + 추이요약
+├── reports/                            기준일별 리포트
+│   └── 20260828/  index.html · summary.html
 ├── design/                             실제 데이터가 반영된 설계문서 5종
 │   ├── DS-015_AI_스케줄_자동편성_엔진_설계서.md   ★ AI 과업 핵심
 │   ├── DS-014_근무유형_근태규칙_표준정의서.md      47→14 매핑 + 특이근태 예외 23종

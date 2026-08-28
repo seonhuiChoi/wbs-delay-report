@@ -1,0 +1,366 @@
+<title>08-28 진척 리포트</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#F4F6FA;--sheet:#fff;--surface:#fff;--surface-2:#EDF1F8;--surface-3:#E3E9F4;
+  --tint:#EDF1F8;--tint2:#E3E9F4;--ink:#10162B;--slate:#5D6885;--slate2:#7C87A0;
+  --rule:#D7DEEB;--rule-soft:#E6EBF3;--rule2:#E6EBF3;
+  --cobalt:#1E3FA6;--cobalt-ink:#16307D;--cobalt-soft:#E7EDFB;
+  --ok:#0F7A55;--ok-soft:#E2F1EA;--warn:#A2680A;--warn-soft:#F8EFDC;
+  --late:#B23B2E;--late-soft:#F9E7E4;--idle:#8892A8;--idle-soft:#EAEDF4;--on-fill:#fff;
+  --shadow:0 1px 2px rgba(16,22,43,.05),0 8px 24px -12px rgba(16,22,43,.18);
+  --fs-d:'Hahmlet','Nanum Myeongjo','Batang',serif;
+  --fs-b:'IBM Plex Sans KR','Malgun Gothic','Apple SD Gothic Neo',sans-serif;
+  --fs-m:'IBM Plex Mono','D2Coding',Consolas,monospace;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0A0E19;--sheet:#131A2B;--surface:#131A2B;--surface-2:#1A2235;--surface-3:#222C42;
+  --tint:#1A2235;--tint2:#222C42;--ink:#E9EDF6;--slate:#9AA5BE;--slate2:#7E8AA8;
+  --rule:#2A3349;--rule-soft:#202839;--rule2:#202839;
+  --cobalt:#8CA7FF;--cobalt-ink:#B3C4FF;--cobalt-soft:#1A2547;
+  --ok:#4FC194;--ok-soft:#123027;--warn:#E2A93E;--warn-soft:#332715;
+  --late:#F2806F;--late-soft:#3A1F1B;--idle:#8590AC;--idle-soft:#1E2739;--on-fill:#0A0E19;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);}}
+:root[data-theme="dark"]{
+  --paper:#0A0E19;--sheet:#131A2B;--surface:#131A2B;--surface-2:#1A2235;--surface-3:#222C42;
+  --tint:#1A2235;--tint2:#222C42;--ink:#E9EDF6;--slate:#9AA5BE;--slate2:#7E8AA8;
+  --rule:#2A3349;--rule-soft:#202839;--rule2:#202839;
+  --cobalt:#8CA7FF;--cobalt-ink:#B3C4FF;--cobalt-soft:#1A2547;
+  --ok:#4FC194;--ok-soft:#123027;--warn:#E2A93E;--warn-soft:#332715;
+  --late:#F2806F;--late-soft:#3A1F1B;--idle:#8590AC;--idle-soft:#1E2739;--on-fill:#0A0E19;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--fs-b);
+ font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;font-weight:600;text-wrap:balance} p{margin:0} a{color:var(--cobalt)}
+code,.mono{font-family:var(--fs-m);font-variant-numeric:tabular-nums}
+.wrap{max-width:1140px;margin:0 auto;padding:0 28px}
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);
+ backdrop-filter:saturate(1.6) blur(12px);border-bottom:1px solid var(--rule)}
+.topbar-in{display:flex;align-items:center;gap:18px;height:52px}
+.brand{font-family:var(--fs-m);font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--cobalt);white-space:nowrap}
+.wknav{display:flex;gap:1px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+.wknav::-webkit-scrollbar{display:none}
+.wknav a{font-family:var(--fs-m);font-size:11px;color:var(--slate2);text-decoration:none;
+ padding:4px 7px;border-radius:4px;white-space:nowrap}
+.wknav a:hover{background:var(--surface-2);color:var(--ink)}
+.wknav a.on{background:var(--cobalt);color:var(--on-fill);font-weight:600}
+.masthead{padding:46px 0 34px;border-bottom:1px solid var(--rule)}
+.eyebrow{font-family:var(--fs-m);font-size:11px;letter-spacing:.18em;color:var(--slate2);margin-bottom:14px}
+.masthead h1{font-family:var(--fs-d);font-size:clamp(26px,3.6vw,38px);line-height:1.2;letter-spacing:-.02em}
+.meta-strip{display:flex;flex-wrap:wrap;margin-top:26px;border:1px solid var(--rule);
+ border-radius:8px;overflow:hidden;background:var(--surface)}
+.meta-cell{flex:1 1 140px;padding:12px 15px;border-right:1px solid var(--rule-soft)}
+.meta-cell:last-child{border-right:none}
+.meta-k{font-size:10.5px;letter-spacing:.1em;color:var(--slate2);font-family:var(--fs-m)}
+.meta-v{font-size:14px;font-weight:500;margin-top:3px}
+.verdict{margin-top:22px;display:flex;align-items:flex-start;gap:15px;border:1px solid var(--warn);
+ border-left-width:4px;border-radius:8px;background:var(--warn-soft);padding:16px 20px}
+.verdict-badge{font-family:var(--fs-m);font-size:11px;font-weight:600;letter-spacing:.1em;
+ color:var(--warn);border:1px solid var(--warn);border-radius:4px;padding:3px 8px;white-space:nowrap;margin-top:2px}
+.verdict-txt{font-size:14.5px;line-height:1.7} .verdict-txt b{font-weight:600}
+section{padding:44px 0;border-bottom:1px solid var(--rule)}
+.sec-head{display:grid;grid-template-columns:56px 1fr;margin-bottom:26px}
+.sec-no{font-family:var(--fs-d);font-weight:600;font-size:15px;color:var(--cobalt);padding-top:5px}
+.sec-title{font-family:var(--fs-d);font-size:24px;font-weight:600;letter-spacing:-.015em}
+.sec-sub{margin-top:8px;color:var(--slate);font-size:14px;max-width:70ch;line-height:1.7}
+.sec-body{padding-left:56px}
+@media(max-width:760px){.sec-head{grid-template-columns:1fr;gap:6px}.sec-body{padding-left:0}}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--surface);border:1px solid var(--rule);border-radius:9px;padding:16px 18px;box-shadow:var(--shadow)}
+.kpi-k{font-size:11px;font-family:var(--fs-m);letter-spacing:.08em;color:var(--slate2)}
+.kpi-v{font-size:30px;font-weight:600;letter-spacing:-.03em;margin:4px 0 2px;font-variant-numeric:tabular-nums}
+.kpi-s{font-size:12px;color:var(--slate);font-variant-numeric:tabular-nums} .kpi-s b{color:var(--ink);font-weight:600}
+.chart-card{margin-top:16px;background:var(--surface);border:1px solid var(--rule);
+ border-radius:9px;padding:20px 20px 14px;box-shadow:var(--shadow)}
+.chart-hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;margin-bottom:6px}
+.chart-hd h3{font-size:14px}
+.legend{display:flex;gap:14px;margin-left:auto;font-size:11.5px;color:var(--slate)}
+.legend i{display:inline-block;width:16px;height:0;border-top-width:2px;margin-right:5px;vertical-align:3px}
+.chart-scroll{overflow-x:auto} .chart-scroll svg{display:block;min-width:660px;width:100%;height:auto}
+.chart-note{margin-top:10px;padding-top:10px;border-top:1px solid var(--rule-soft);font-size:12.5px;color:var(--slate);line-height:1.65}
+.chart-note b{color:var(--ink);font-weight:600}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:9px;background:var(--surface)}
+table{width:100%;border-collapse:collapse;min-width:640px}
+th{text-align:left;font-family:var(--fs-m);font-size:10.5px;letter-spacing:.08em;color:var(--slate2);
+ padding:11px 14px;border-bottom:1px solid var(--rule);background:var(--surface-2);white-space:nowrap}
+td{padding:10px 14px;border-bottom:1px solid var(--rule-soft);font-size:13.5px;vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pbar{position:relative;height:6px;background:var(--surface-3);border-radius:3px;min-width:80px;margin-top:5px}
+.pbar i{position:absolute;left:0;top:0;height:100%;border-radius:3px}
+.pbar .tick{position:absolute;top:-3px;width:1.5px;height:12px;background:var(--ink);opacity:.5}
+.chip{display:inline-block;font-family:var(--fs-m);font-size:10px;letter-spacing:.05em;
+ padding:2px 7px;border-radius:4px;white-space:nowrap;border:1px solid transparent}
+.c-ok{background:var(--ok-soft);color:var(--ok);border-color:color-mix(in srgb,var(--ok) 28%,transparent)}
+.c-warn{background:var(--warn-soft);color:var(--warn);border-color:color-mix(in srgb,var(--warn) 28%,transparent)}
+.c-late{background:var(--late-soft);color:var(--late);border-color:color-mix(in srgb,var(--late) 28%,transparent)}
+.c-idle{background:var(--idle-soft);color:var(--idle);border-color:color-mix(in srgb,var(--idle) 28%,transparent)}
+.case{background:var(--surface);border:1px solid var(--rule);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:12px}
+.case[open]{border-color:color-mix(in srgb,var(--cobalt) 32%,var(--rule))}
+.case-hd{display:grid;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;
+ grid-template-columns:60px 54px 1fr auto auto 18px;list-style:none}
+.case-hd::-webkit-details-marker{display:none} .case-hd:hover{background:var(--surface-2)}
+.case-no{font-family:var(--fs-d);font-size:11.5px;font-weight:600;color:var(--slate2)}
+.case-wbs{font-family:var(--fs-m);font-size:13px;font-weight:600;color:var(--cobalt)}
+.case-nm{font-size:15px;font-weight:500}
+.case-nm .sub{display:block;font-size:11.5px;color:var(--slate2);font-weight:400;margin-top:1px}
+.case-delay{font-family:var(--fs-m);font-size:15px;font-weight:600;color:var(--late);font-variant-numeric:tabular-nums}
+.rc-stamp{font-family:var(--fs-m);font-size:11px;font-weight:600;color:var(--cobalt);
+ border:1.5px solid var(--cobalt);border-radius:4px;padding:3px 9px;white-space:nowrap}
+.case-caret{width:9px;height:9px;border-right:1.5px solid var(--slate2);border-bottom:1.5px solid var(--slate2);
+ transform:rotate(45deg) translate(-2px,-2px);transition:transform .2s;justify-self:end}
+.case[open] .case-caret{transform:rotate(225deg) translate(-1px,-1px)}
+@media(max-width:900px){.case-hd{grid-template-columns:1fr auto;
+ grid-template-areas:"no caret" "wbs delay" "nm nm" "rc rc";gap:6px 12px}
+ .case-no{grid-area:no}.case-wbs{grid-area:wbs}.case-nm{grid-area:nm}
+ .case-delay{grid-area:delay}.rc-stamp{grid-area:rc;justify-self:start}.case-caret{grid-area:caret}}
+.case-body{border-top:1px solid var(--rule)}
+.facts{display:grid;grid-template-columns:repeat(6,1fr);background:var(--surface-2)}
+@media(max-width:820px){.facts{grid-template-columns:repeat(3,1fr)}}
+.fact{padding:11px 16px;border-right:1px solid var(--rule-soft)} .fact:last-child{border-right:none}
+.fact-k{font-family:var(--fs-m);font-size:9.5px;letter-spacing:.08em;color:var(--slate2)}
+.fact-v{font-size:13px;font-weight:500;margin-top:2px;font-variant-numeric:tabular-nums}
+.blk{padding:20px 22px;border-top:1px solid var(--rule-soft)}
+.blk-h{font-family:var(--fs-m);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--slate2);margin-bottom:14px}
+.dx-txt{font-size:14px;line-height:1.8;max-width:78ch} .dx-txt b{font-weight:600}
+.dx-txt .hl{background:var(--warn-soft);padding:1px 4px;border-radius:3px;font-weight:500}
+.root-chain{margin-top:14px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;
+ font-family:var(--fs-m);font-size:11.5px;color:var(--slate);padding:10px 14px;background:var(--surface-2);border-radius:7px}
+.root-chain b{color:var(--late);font-weight:600} .root-chain .arw{color:var(--slate2)}
+.rx-row{display:grid;grid-template-columns:26px 1fr 128px 78px;gap:14px;padding:11px 0;
+ border-bottom:1px solid var(--rule-soft);align-items:baseline;font-size:13.5px}
+.rx-row:last-child{border-bottom:none}
+.rx-n{font-family:var(--fs-m);font-size:11px;color:var(--cobalt);font-weight:600;
+ border:1px solid var(--cobalt);border-radius:3px;text-align:center;padding:1px 0}
+.rx-o,.rx-d{font-size:12px;color:var(--slate);font-family:var(--fs-m)} .rx-d{text-align:right}
+@media(max-width:820px){.rx-row{grid-template-columns:26px 1fr;gap:4px 12px}.rx-o,.rx-d{grid-column:2;text-align:left}}
+.rx-foot{margin-top:14px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:12px 16px;
+ border-radius:7px;background:var(--ok-soft);border:1px solid color-mix(in srgb,var(--ok) 25%,transparent)}
+.rx-foot .lb{font-family:var(--fs-m);font-size:10.5px;letter-spacing:.08em;color:var(--ok)}
+.rx-foot .vl{font-size:14px;font-weight:600;color:var(--ok)}
+.rx-foot .nt{font-size:12.5px;color:var(--slate);margin-left:auto}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:9px;box-shadow:var(--shadow);overflow:hidden}
+.panel-h{padding:12px 18px;border-bottom:1px solid var(--rule);background:var(--surface-2);
+ font-size:12.5px;font-weight:600;display:flex;gap:10px}
+.panel-h .r{margin-left:auto;font-family:var(--fs-m);font-size:11px;color:var(--slate2);font-weight:400}
+.panel-b{padding:16px 18px}
+.split{display:grid;grid-template-columns:1.15fr 1fr;gap:16px;align-items:start}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+.trace{display:flex;flex-direction:column}
+.tr{display:grid;grid-template-columns:62px 108px 48px 1fr;gap:12px;align-items:baseline;
+ padding:8px 0 8px 20px;position:relative;font-size:13px}
+.tr::before{content:"";position:absolute;left:4px;top:15px;width:7px;height:7px;border-radius:50%;
+ background:var(--surface);border:1.5px solid var(--slate2)}
+.tr.key::before{border-color:var(--warn);background:var(--warn)}
+.tr-src{font-family:var(--fs-m);font-size:10px;color:var(--slate2)}
+.tr-id{font-family:var(--fs-m);font-size:12px;font-weight:500;color:var(--cobalt)}
+.tr-dt{font-family:var(--fs-m);font-size:11.5px;color:var(--slate2)}
+.tr-sig{line-height:1.6}
+@media(max-width:820px){.tr{grid-template-columns:62px 1fr;gap:4px 10px}.tr-dt{grid-column:2}.tr-sig{grid-column:1/-1}}
+.docs{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media(max-width:1000px){.docs{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:640px){.docs{grid-template-columns:repeat(2,1fr)}}
+.doc{background:var(--surface);border:1px solid var(--rule);border-radius:9px;padding:15px 16px;box-shadow:var(--shadow)}
+.doc-t{font-size:13px;font-weight:600} .doc-c{font-family:var(--fs-m);font-size:10px;color:var(--slate2);margin-bottom:11px}
+.doc-l{display:flex;justify-content:space-between;gap:8px;font-size:12px;padding:3.5px 0;color:var(--slate)}
+.doc-l b{font-family:var(--fs-m);font-weight:600;color:var(--ink)}
+.doc-l.alert{color:var(--warn)} .doc-l.alert b{color:var(--warn)}
+footer{padding:32px 0 56px;font-size:12px;color:var(--slate2);line-height:1.75}
+footer .fl{display:flex;flex-wrap:wrap;gap:8px 22px} footer .mono{font-size:11.5px}
+footer .disc{margin-top:14px;padding:12px 16px;border-radius:7px;background:var(--surface-2);
+ border:1px solid var(--rule-soft);max-width:80ch}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.topbar{display:none}body{background:#fff}section{break-inside:avoid}.case-body{display:block!important}}
+</style>
+
+<div class="topbar"><div class="wrap topbar-in">
+  <span class="brand">주간 진척 리포트</span>
+  <nav class="wknav"><a href="../20260703/index.html">07-03</a><a href="../20260710/index.html">07-10</a><a href="../20260717/index.html">07-17</a><a href="../20260724/index.html">07-24</a><a href="../20260731/index.html">07-31</a><a href="../20260807/index.html">08-07</a><a href="../20260814/index.html">08-14</a><a href="../20260821/index.html">08-21</a><a href="../20260828/index.html" class="on">08-28</a><a href="../20260904/index.html">09-04</a><a href="../20260911/index.html">09-11</a><a href="../20260918/index.html">09-18</a><a href="../20260925/index.html">09-25</a><a href="../20261002/index.html">10-02</a><a href="../20261009/index.html">10-09</a></nav>
+</div></div>
+
+<header class="masthead"><div class="wrap">
+  <div class="eyebrow">주간 진척 · 지연원인 분석 리포트 · 2026-08-28 (금) 08:00 자동생성</div>
+  <h1>점포 근태 · AI 스케줄<br>관리 시스템 구축</h1>
+  <div class="meta-strip">
+    <div class="meta-cell"><div class="meta-k">기준일</div><div class="meta-v mono">2026-08-28</div></div>
+    <div class="meta-cell"><div class="meta-k">경과</div><div class="meta-v mono">59 / 184일 (32.1%)</div></div>
+    <div class="meta-cell"><div class="meta-k">수행기간</div><div class="meta-v mono">2026-07-01 ~ 12-31</div></div>
+    <div class="meta-cell"><div class="meta-k">대상</div><div class="meta-v mono">71개점 · 8,400명</div></div>
+    <div class="meta-cell"><div class="meta-k">PM / PMO</div><div class="meta-v">나루 / 미르</div></div>
+  </div>
+  <div class="verdict"><span class="verdict-badge">주시 필요</span>
+    <p class="verdict-txt">실적 <b>17.0%</b>, 계획 대비 <b>-0.6%p</b> — 계획 대비 달성률 <b>96.6%</b>. <b>지연 TASK는 0건</b>이다. 진척 보고만 보면 정상이다. 그런데 <code>4.6.1 편성 기준정보 정의 및 수집</code>이 계획의 <b>39% 속도</b>로 가고 있고, 회의록에는 미결 <b>2건</b> 중 결정필요일 <b>5영업일 초과가 2건</b> 있다. 지금은 만회 여력이 있는 시점이다.</p></div>
+</div></header>
+
+<section id="s1"><div class="wrap">
+  <div class="sec-head"><div class="sec-no">01</div><div>
+    <h2 class="sec-title">종합 현황</h2>
+    <p class="sec-sub">전주 97.1% → 96.6% (-0.5%p)</p></div></div>
+  <div class="sec-body">
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-k">전체 진행률</div>
+        <div class="kpi-v">17.0<span style="font-size:18px">%</span></div>
+        <div class="kpi-s">계획 <b>17.6%</b> · 편차 -0.6%p</div></div>
+      <div class="kpi"><div class="kpi-k">계획 대비 달성률</div>
+        <div class="kpi-v" style="color:var(--warn)">96.6<span style="font-size:18px">%</span></div>
+        <div class="kpi-s">실적 17.0% ÷ 계획 17.6%</div></div>
+      <div class="kpi"><div class="kpi-k">지연 TASK</div>
+        <div class="kpi-v" style="color:var(--ok)">0<span style="font-size:18px">건</span></div>
+        <div class="kpi-s">누적 지연 <b>0일</b></div></div>
+      <div class="kpi"><div class="kpi-k">진척 부진 · 주시</div>
+        <div class="kpi-v" style="color:var(--warn)">1<span style="font-size:18px">건</span></div>
+        <div class="kpi-s">계획 대비 8%p 이상 뒤처짐</div></div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-hd"><h3>진척 S-Curve · 주간 실적</h3>
+        <div class="legend"><span><i style="border-top:2px solid var(--slate-2)"></i>계획</span>
+          <span><i style="border-top:2px solid var(--cobalt)"></i>실적</span>
+          <span><i style="border-top:2px solid var(--late);border-top-style:dashed"></i>변경 동결 12-14</span></div></div>
+      <div class="chart-scroll"><svg viewBox="0 0 1030 300" role="img" aria-label="주간 진척 S-커브">
+        <rect x="876.4" y="34" width="123.60000000000002" height="222" fill="var(--late)" opacity="0.10"/>
+        <g stroke="var(--rule-soft)" stroke-width="1">
+          <line x1="60" y1="250" x2="1000" y2="250"/><line x1="60" y1="197.5" x2="1000" y2="197.5"/>
+          <line x1="60" y1="145" x2="1000" y2="145"/><line x1="60" y1="92.5" x2="1000" y2="92.5"/>
+          <line x1="60" y1="40" x2="1000" y2="40"/></g>
+        <g font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--slate2)">
+          <text x="50" y="253" text-anchor="end">0%</text><text x="50" y="201" text-anchor="end">25</text>
+          <text x="50" y="148" text-anchor="end">50</text><text x="50" y="96" text-anchor="end">75</text>
+          <text x="50" y="43" text-anchor="end">100</text>
+          <text x="60" y="271" text-anchor="middle">07-01</text>
+          <text x="364.9" y="271" text-anchor="middle">09-01</text>
+          <text x="664.9" y="271" text-anchor="middle">11-01</text>
+          <text x="960.0" y="271" text-anchor="middle">12-31</text></g>
+        <line x1="876.4" y1="34" x2="876.4" y2="256" stroke="var(--late)" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <polyline fill="none" stroke="var(--slate2)" stroke-width="2" stroke-linejoin="round" points="60.0,250.0 94.4,247.5 128.9,244.1 163.3,239.9 197.7,234.9 232.1,229.0 266.6,222.3 301.0,214.7 335.4,205.9 369.8,196.2 404.3,185.7 438.7,174.0 473.1,161.0 507.5,153.0 542.0,140.8 576.4,128.2 610.8,115.6 645.2,104.0 679.7,93.5 714.1,84.1 748.5,74.7 783.0,66.2 817.4,58.9 851.8,52.6 886.2,47.3 920.7,43.1 955.1,40.0"/>
+        <polyline fill="none" stroke="var(--cobalt)" stroke-width="2.5" stroke-linejoin="round" points="69.8,248.1 104.3,243.9 138.7,239.7 173.1,237.6 207.5,234.9 242.0,230.9 276.4,227.5 310.8,221.7 345.2,214.3"/>
+        <line x1="345.2" y1="34" x2="345.2" y2="256" stroke="var(--cobalt)" stroke-width="1.5" opacity=".5"/>
+        <circle cx="345.2" cy="213.0" r="4" fill="var(--surface)" stroke="var(--slate2)" stroke-width="2"/>
+        <circle cx="345.2" cy="214.3" r="4.5" fill="var(--cobalt)"/>
+        <text x="353.2" y="30" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--cobalt)" font-weight="600">기준일 08-28</text>
+        <text x="353.2" y="234.3" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--warn)" font-weight="600">-0.6%p</text>
+      </svg></div>
+      <p class="chart-note">기준일 계획선과 실적선의 간격은 <b>-0.6%p</b>로 아직 작다. 붉은 구간은 <b>연말 성수기 IT 변경 동결(12-14 ~)</b>이며, 오픈 목표는 12-04다. 현재 여유는 있으나 설계 지연이 구현으로 전파되면 이 여유가 빠르게 줄어든다.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="s2"><div class="wrap">
+  <div class="sec-head"><div class="sec-no">02</div><div>
+    <h2 class="sec-title">단계별 진척</h2></div></div>
+  <div class="sec-body"><div class="tbl-wrap"><table>
+    <thead><tr><th>단계</th><th class="num">가중치</th><th class="num">TASK</th>
+      <th style="min-width:120px">진척</th><th class="num">실적</th><th class="num">계획</th>
+      <th class="num">편차</th><th>상태</th></tr></thead>
+    <tbody><tr><td><b>프로젝트 관리</b></td><td class="num mono">10%</td><td class="num mono">0/1</td><td><div class="pbar"><i style="width:32.0%;background:var(--ok)"></i><span class="tick" style="left:32.1%"></span></div></td><td class="num mono">32.0%</td><td class="num mono">32.1%</td><td class="num mono">-0.1</td><td><span class="chip c-ok">정상</span></td></tr><tr><td><b>착수 및 계획</b></td><td class="num mono">4%</td><td class="num mono">1/1</td><td><div class="pbar"><i style="width:100.0%;background:var(--ok)"></i><span class="tick" style="left:100.0%"></span></div></td><td class="num mono">100.0%</td><td class="num mono">100.0%</td><td class="num mono">+0.0</td><td><span class="chip c-ok">완료</span></td></tr><tr><td><b>현행분석 · 요건정의</b></td><td class="num mono">12%</td><td class="num mono">1/2</td><td><div class="pbar"><i style="width:47.6%;background:var(--warn)"></i><span class="tick" style="left:50.6%"></span></div></td><td class="num mono">47.6%</td><td class="num mono">50.6%</td><td class="num mono" style=color:var(--warn)>-3.0</td><td><span class="chip c-warn">주의</span></td></tr><tr><td><b>설계</b></td><td class="num mono">22%</td><td class="num mono">0/11</td><td><div class="pbar"><i style="width:17.4%;background:var(--warn)"></i><span class="tick" style="left:19.7%"></span></div></td><td class="num mono">17.4%</td><td class="num mono">19.7%</td><td class="num mono" style=color:var(--warn)>-2.3</td><td><span class="chip c-warn">주의</span></td></tr><tr><td><b>구현 · 단위테스트</b></td><td class="num mono">32%</td><td class="num mono">0/39</td><td><div class="pbar"><i style="width:0.0%;background:var(--idle)"></i><span class="tick" style="left:0.0%"></span></div></td><td class="num mono">0.0%</td><td class="num mono">0.0%</td><td class="num mono">+0.0</td><td><span class="chip c-idle">예정</span></td></tr><tr><td><b>테스트</b></td><td class="num mono">12%</td><td class="num mono">0/1</td><td><div class="pbar"><i style="width:0.0%;background:var(--idle)"></i><span class="tick" style="left:0.0%"></span></div></td><td class="num mono">0.0%</td><td class="num mono">0.0%</td><td class="num mono">+0.0</td><td><span class="chip c-idle">예정</span></td></tr><tr><td><b>이행 · 전점 확산</b></td><td class="num mono">6%</td><td class="num mono">0/1</td><td><div class="pbar"><i style="width:0.0%;background:var(--idle)"></i><span class="tick" style="left:0.0%"></span></div></td><td class="num mono">0.0%</td><td class="num mono">0.0%</td><td class="num mono">+0.0</td><td><span class="chip c-idle">예정</span></td></tr><tr><td><b>안정화 · 종료</b></td><td class="num mono">2%</td><td class="num mono">0/1</td><td><div class="pbar"><i style="width:0.0%;background:var(--idle)"></i><span class="tick" style="left:0.0%"></span></div></td><td class="num mono">0.0%</td><td class="num mono">0.0%</td><td class="num mono">+0.0</td><td><span class="chip c-idle">예정</span></td></tr></tbody></table></div></div>
+</div></section>
+
+<section id="s3"><div class="wrap">
+  <div class="sec-head"><div class="sec-no">03</div><div>
+    <h2 class="sec-title">진척 부진 · 주시 대상</h2>
+    <p class="sec-sub">계획종료일이 아직 도래하지 않아 <b>지연으로는 잡히지 않지만</b>, 계획 대비 진척 속도가 8%p 이상 뒤처진 항목이다. 지연이 되기 전에 보는 것이 목적이다.</p></div></div>
+  <div class="sec-body">
+        <details class="case" open>
+          <summary class="case-hd">
+            <span class="case-no">주시 1</span><span class="case-wbs">4.6.1</span>
+            <span class="case-nm">편성 기준정보 정의 및 수집<span class="sub">새벽 · 계획종료 2026-09-25 · 잔여 28일</span></span>
+            <span class="case-delay">-18.4%p</span>
+            <span class="rc-stamp">진척 부진</span><span class="case-caret"></span>
+          </summary>
+          <div class="case-body">
+            <div class="facts">
+              <div class="fact"><div class="fact-k">실적 진척</div><div class="fact-v">11.6%</div></div>
+              <div class="fact"><div class="fact-k">계획 진척</div><div class="fact-v">30.0%</div></div>
+              <div class="fact"><div class="fact-k">계획 대비</div><div class="fact-v" style="color:var(--late)">39% 속도</div></div>
+              <div class="fact"><div class="fact-k">현재 속도</div><div class="fact-v">1.05%p/일</div></div>
+              <div class="fact"><div class="fact-k">필요 속도</div><div class="fact-v" style="color:var(--late)">3.16%p/일</div></div>
+              <div class="fact"><div class="fact-k">지연 판정</div><div class="fact-v" style="color:var(--ok)">아직 아님</div></div>
+            </div>
+            <div class="blk">
+              <div class="blk-h">진단</div>
+              <p class="dx-txt">
+                계획종료일이 <b>2026-09-25</b>이라 <b>아직 지연으로 잡히지 않는다.</b>
+                기준일 기준 지연 TASK는 0건이고 종합 달성률도 96.6%다. 진척 보고만 보면 정상이다.
+              </p>
+              <p class="dx-txt" style="margin-top:14px">
+                그런데 속도를 보면 다르다. 실적 11.6%는 계획 30.0% 대비 <span class="hl">39% 속도</span>다.
+                착수 이후 하루 평균 <b>1.05%p</b>씩 올라왔는데, 남은 <b>28일</b>에 88.4%p를 채우려면
+                <b>3.16%p/일</b>이 필요하다. <b>지금의 3.0배</b>다.
+                속도가 그대로면 계획종료일에 약 41%에서 멈춘다.
+              </p>
+              <div class="root-chain">
+                <span>판정</span><span class="arw">→</span><span>지연 <b>0일</b> (계획종료일 미도래)</span>
+                <span class="arw">·</span><span>진척 부진 <b>-18.4%p</b></span>
+                <span class="arw">→</span><span>현 속도 유지 시 <b>2026-09-25 시점 41%</b></span>
+              </div>
+            </div>
+            <div class="blk">
+              <div class="blk-h">권고</div>
+              <div class="rx">
+                <div class="rx-row"><span class="rx-n">1</span>
+                  <span class="rx-a">진척 사유 확인 — 착수 지연인지, 외부 회신 대기인지, 공수 부족인지 구분</span>
+                  <span class="rx-o">새벽 / PMO</span><span class="rx-d">즉시</span></div>
+                <div class="rx-row"><span class="rx-n">2</span>
+                  <span class="rx-a">주간 진척회의 <b>정식 안건 상정</b> — 이 항목만 별도 트래킹 전환</span>
+                  <span class="rx-o">PMO</span><span class="rx-d">차주</span></div>
+                <div class="rx-row"><span class="rx-n">3</span>
+                  <span class="rx-a">2주 내 회복 없으면 <b>선제 조치</b>(공수 보강·범위 조정) 판단</span>
+                  <span class="rx-o">PM</span><span class="rx-d">2주 후</span></div>
+              </div>
+              <div class="rx-foot"><span class="lb">지금 조치 시</span><span class="vl">지연 0일 유지 가능</span>
+                <span class="nt">계획종료일까지 28일 남음 · 지금은 아직 만회 여력이 있다</span></div>
+            </div>
+          </div>
+        </details></div>
+</div></section>
+
+<section id="s4"><div class="wrap">
+  <div class="sec-head"><div class="sec-no">04</div><div>
+    <h2 class="sec-title">선행 경고 지표</h2>
+    <p class="sec-sub">지연은 계획종료일이 지나야 잡힌다. 그보다 먼저 움직이는 신호를 따로 본다.</p></div></div>
+  <div class="sec-body">
+    <div class="split">
+      <div class="panel"><div class="panel-h">미결사항<span class="r">2건 · 5영업일 초과 2건</span></div>
+        <div class="panel-b"><div class="trace"><div class="tr key"><span class="tr-src">정기주간</span><span class="tr-id">MT-2026-023</span><span class="tr-dt">08-12</span><span class="tr-sig">부문 표준 코드 매핑 기준 (결정필요일 2026-08-21 / 결정권자: 고객 점포운영팀)</span></div><div class="tr key"><span class="tr-src">고객협의</span><span class="tr-id">MT-2026-024</span><span class="tr-dt">08-21</span><span class="tr-sig">부문 표준 코드 매핑 기준 이월 (결정필요일 2026-08-21 / 결정권자: 고객 점포운영팀)</span></div></div></div></div>
+      <div class="panel"><div class="panel-h">주간 추이<span class="r">최근 6주</span></div>
+        <div class="panel-b"><div class="tbl-wrap" style="border:none"><table style="min-width:0">
+          <thead><tr><th>기준일</th><th class="num">달성률</th><th class="num">지연</th><th class="num">미결</th><th class="num">5일초과</th></tr></thead>
+          <tbody><tr><td class="mono" style="font-size:12px">07-24</td><td class="num mono">100.0%</td><td class="num mono">0건</td><td class="num mono">0</td><td class="num mono">0</td></tr><tr><td class="mono" style="font-size:12px">07-31</td><td class="num mono">100.0%</td><td class="num mono">0건</td><td class="num mono">0</td><td class="num mono">0</td></tr><tr><td class="mono" style="font-size:12px">08-07</td><td class="num mono">100.0%</td><td class="num mono">0건</td><td class="num mono">0</td><td class="num mono">0</td></tr><tr><td class="mono" style="font-size:12px">08-14</td><td class="num mono">99.1%</td><td class="num mono">0건</td><td class="num mono">1</td><td class="num mono">0</td></tr><tr><td class="mono" style="font-size:12px">08-21</td><td class="num mono">97.1%</td><td class="num mono">0건</td><td class="num mono">2</td><td class="num mono" style=color:var(--warn)>1</td></tr><tr style="background:var(--surface-2);font-weight:600"><td class="mono" style="font-size:12px">08-28</td><td class="num mono">96.6%</td><td class="num mono">0건</td><td class="num mono">2</td><td class="num mono" style=color:var(--warn)>2</td></tr></tbody></table></div></div></div>
+    </div>
+    <div class="docs" style="margin-top:16px">
+      <div class="doc"><div class="doc-t">회의록</div><div class="doc-c">MEETING MINUTES</div>
+        <div class="doc-l"><span>누적</span><b>5건</b></div>
+        <div class="doc-l"><span>결정사항</span><b>23건</b></div>
+        <div class="doc-l alert"><span>미결 누적</span><b>2건</b></div>
+        <div class="doc-l alert"><span>5영업일 초과</span><b>2건</b></div></div>
+      <div class="doc"><div class="doc-t">액션아이템</div><div class="doc-c">ACTION ITEMS</div>
+        <div class="doc-l"><span>등록</span><b>5건</b></div>
+        <div class="doc-l"><span>완료</span><b>3건</b></div>
+        <div class="doc-l"><span>기한 초과</span><b>0건</b></div></div>
+      <div class="doc"><div class="doc-t">설계 산출물</div><div class="doc-c">DELIVERABLES</div>
+        <div class="doc-l"><span>착수</span><b>5건</b></div>
+        <div class="doc-l"><span>승인</span><b>0건</b></div></div>
+      <div class="doc"><div class="doc-t">이슈 · 리스크</div><div class="doc-c">ISSUES</div>
+        <div class="doc-l"><span>등록</span><b>1건</b></div>
+        <div class="doc-l alert"><span>미종결</span><b>1건</b></div></div>
+      <div class="doc"><div class="doc-t">변경요청</div><div class="doc-c">CHANGE REQUESTS</div>
+        <div class="doc-l"><span>접수</span><b>2건</b></div>
+        <div class="doc-l"><span>승인</span><b>2건</b></div>
+        <div class="doc-l"><span>재기준선 미반영</span><b>0건</b></div></div>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="fl">
+    <span class="mono">생성 2026-08-28 08:00 · 자동 배치</span>
+    <span class="mono">원천 6종 · 조인 키 WBS_ID</span>
+    <span class="mono"><a href="summary.html">임원 보고</a> · <a href="../../trend.html">주간 추이</a> · <a href="../../index.html">10-08 상세</a></span>
+  </div>
+  <div class="disc">본 리포트는 지연 원인 자동 도출 방식을 시연하기 위한 <b>가상의 프로젝트 데이터</b>로 작성되었습니다.
+  원본 스냅샷은 <span class="mono">/snapshots/20260828</span> 에 CSV 6종으로 제공됩니다.</div>
+</div></footer>

@@ -1,0 +1,156 @@
+<title>08-28 임원보고</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#F4F6FA;--sheet:#fff;--surface:#fff;--surface-2:#EDF1F8;--surface-3:#E3E9F4;
+  --tint:#EDF1F8;--tint2:#E3E9F4;--ink:#10162B;--slate:#5D6885;--slate2:#7C87A0;
+  --rule:#D7DEEB;--rule-soft:#E6EBF3;--rule2:#E6EBF3;
+  --cobalt:#1E3FA6;--cobalt-ink:#16307D;--cobalt-soft:#E7EDFB;
+  --ok:#0F7A55;--ok-soft:#E2F1EA;--warn:#A2680A;--warn-soft:#F8EFDC;
+  --late:#B23B2E;--late-soft:#F9E7E4;--idle:#8892A8;--idle-soft:#EAEDF4;--on-fill:#fff;
+  --shadow:0 1px 2px rgba(16,22,43,.05),0 8px 24px -12px rgba(16,22,43,.18);
+  --fs-d:'Hahmlet','Nanum Myeongjo','Batang',serif;
+  --fs-b:'IBM Plex Sans KR','Malgun Gothic','Apple SD Gothic Neo',sans-serif;
+  --fs-m:'IBM Plex Mono','D2Coding',Consolas,monospace;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0A0E19;--sheet:#131A2B;--surface:#131A2B;--surface-2:#1A2235;--surface-3:#222C42;
+  --tint:#1A2235;--tint2:#222C42;--ink:#E9EDF6;--slate:#9AA5BE;--slate2:#7E8AA8;
+  --rule:#2A3349;--rule-soft:#202839;--rule2:#202839;
+  --cobalt:#8CA7FF;--cobalt-ink:#B3C4FF;--cobalt-soft:#1A2547;
+  --ok:#4FC194;--ok-soft:#123027;--warn:#E2A93E;--warn-soft:#332715;
+  --late:#F2806F;--late-soft:#3A1F1B;--idle:#8590AC;--idle-soft:#1E2739;--on-fill:#0A0E19;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);}}
+:root[data-theme="dark"]{
+  --paper:#0A0E19;--sheet:#131A2B;--surface:#131A2B;--surface-2:#1A2235;--surface-3:#222C42;
+  --tint:#1A2235;--tint2:#222C42;--ink:#E9EDF6;--slate:#9AA5BE;--slate2:#7E8AA8;
+  --rule:#2A3349;--rule-soft:#202839;--rule2:#202839;
+  --cobalt:#8CA7FF;--cobalt-ink:#B3C4FF;--cobalt-soft:#1A2547;
+  --ok:#4FC194;--ok-soft:#123027;--warn:#E2A93E;--warn-soft:#332715;
+  --late:#F2806F;--late-soft:#3A1F1B;--idle:#8590AC;--idle-soft:#1E2739;--on-fill:#0A0E19;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--fs-b);
+ font-size:11px;line-height:1.45;-webkit-font-smoothing:antialiased;padding:16px 12px}
+h1,h2{margin:0;font-weight:600;text-wrap:balance} p{margin:0}
+.mono{font-family:var(--fs-m);font-variant-numeric:tabular-nums}
+.sheet{width:210mm;min-height:297mm;margin:0 auto;background:var(--sheet);
+ padding:9mm 10mm;display:flex;flex-direction:column;gap:6px;
+ box-shadow:0 2px 18px rgba(16,22,43,.14);border-radius:3px}
+.hd{display:flex;align-items:flex-start;gap:14px;padding-bottom:7px;border-bottom:2px solid var(--ink)}
+.hd-l{flex:1}
+.eyebrow{font-family:var(--fs-m);font-size:9px;letter-spacing:.16em;color:var(--slate2)}
+.hd h1{font-family:var(--fs-d);font-size:17px;letter-spacing:-.02em;margin-top:3px}
+.hd-sub{font-size:10px;color:var(--slate);margin-top:2px}
+.hd-r{text-align:right;white-space:nowrap}
+.badge{display:inline-block;font-family:var(--fs-m);font-size:10px;font-weight:600;
+ letter-spacing:.08em;color:var(--on-fill);background:var(--warn);padding:3px 10px;border-radius:3px}
+.hd-date{font-family:var(--fs-m);font-size:11px;color:var(--slate);margin-top:5px}
+.lead{background:var(--warn-soft);border-left:3px solid var(--warn);padding:8px 12px;
+ border-radius:0 5px 5px 0;font-size:11.5px;line-height:1.6}
+.lead b{font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.kpi{border:1px solid var(--rule);border-radius:5px;padding:7px 10px}
+.kpi-k{font-family:var(--fs-m);font-size:8.5px;letter-spacing:.07em;color:var(--slate2)}
+.kpi-v{font-size:17px;font-weight:600;letter-spacing:-.03em;margin:1px 0;font-variant-numeric:tabular-nums}
+.kpi-s{font-size:9px;color:var(--slate);font-variant-numeric:tabular-nums}
+.st{display:flex;align-items:baseline;gap:8px;margin-top:2px;font-family:var(--fs-d);font-size:12.5px;font-weight:600}
+.st i{font-family:var(--fs-m);font-size:10px;font-style:normal;color:var(--cobalt);font-weight:600}
+.st .note{margin-left:auto;font-family:var(--fs-b);font-size:10px;font-weight:400;color:var(--slate2)}
+.fork{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.br{border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.br-h{padding:5px 10px;font-size:10.5px;font-weight:600;display:flex;align-items:baseline;gap:7px}
+.br-h .tag{font-family:var(--fs-m);font-size:9px;padding:1px 6px;border-radius:3px;color:var(--on-fill)}
+.br.no .br-h{background:var(--warn-soft);color:var(--warn)} .br.no .br-h .tag{background:var(--warn)}
+.br.yes .br-h{background:var(--ok-soft);color:var(--ok)} .br.yes .br-h .tag{background:var(--ok)}
+.br-b{padding:7px 10px}
+.step{display:grid;grid-template-columns:52px 1fr;gap:7px;padding:1.5px 0;font-size:10px;align-items:baseline}
+.step .d{font-family:var(--fs-m);font-size:10px;font-weight:600;color:var(--slate)}
+.br.no .step.key .d,.br.no .step.key span{color:var(--warn);font-weight:600}
+.br.yes .step.key .d,.br.yes .step.key span{color:var(--ok);font-weight:600}
+.br-f{margin:5px 10px 8px;padding:5px 9px;border-radius:4px;font-size:10.5px;font-weight:600;text-align:center}
+.br.no .br-f{background:var(--warn);color:var(--on-fill)}
+.br.yes .br-f{background:var(--ok);color:var(--on-fill)}
+.asks{border:1px solid var(--cobalt);border-radius:6px;overflow:hidden}
+.ask-h{background:var(--cobalt);color:var(--on-fill);padding:5px 11px;font-size:11px;font-weight:600}
+table{width:100%;border-collapse:collapse}
+th{font-family:var(--fs-m);font-size:8.5px;letter-spacing:.06em;color:var(--slate2);
+ text-align:left;padding:5px 10px;border-bottom:1px solid var(--rule);background:var(--tint)}
+td{padding:6px 10px;border-bottom:1px solid var(--rule2);font-size:10.5px;vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-family:var(--fs-m)}
+td b{font-weight:600}
+td small{display:block;font-size:9.5px;color:var(--slate2);margin-top:1px;line-height:1.45}
+.pri{font-family:var(--fs-m);font-size:10px;font-weight:600;color:var(--on-fill);
+ background:var(--warn);border-radius:3px;padding:1px 6px;white-space:nowrap}
+.pri.n{background:var(--slate2)}
+.close{display:grid;grid-template-columns:1.5fr 1fr;gap:8px;margin-top:auto}
+.verdict{background:var(--cobalt-soft);border:1px solid var(--cobalt);border-radius:6px;
+ padding:9px 12px;font-size:10.5px;line-height:1.6}
+.verdict b{font-weight:600;color:var(--cobalt-ink)}
+.wkt{border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.wkt table{font-size:10px} .wkt td{padding:3.5px 9px;font-size:10px}
+.wkt tr.now td{background:var(--tint);font-weight:600}
+footer{margin-top:6px;padding-top:5px;border-top:1px solid var(--rule);
+ display:flex;justify-content:space-between;gap:14px;font-family:var(--fs-m);font-size:8.5px;color:var(--slate2)}
+@media(max-width:820px){.sheet{width:100%;min-height:auto;padding:18px 15px}
+ .kpis{grid-template-columns:repeat(2,1fr)}.fork,.close{grid-template-columns:1fr}}
+@media print{body{background:#fff;padding:0}
+ .sheet{width:auto;min-height:auto;box-shadow:none;border-radius:0;padding:11mm}}
+@page{size:A4 portrait;margin:0}
+</style>
+
+<div class="sheet">
+  <div class="hd">
+    <div class="hd-l">
+      <div class="eyebrow">임원 보고 · 주간 진척 현황</div>
+      <h1>점포 근태 · AI 스케줄 관리 시스템 구축</h1>
+      <div class="hd-sub">계약 500,000천원 · 2026-07-01 ~ 12-31 · 71개점 8,400명 · PM 나루 / PMO 미르</div>
+    </div>
+    <div class="hd-r"><span class="badge">주시 필요</span>
+      <div class="hd-date">기준일 2026-08-28 (금)<br>경과 59 / 184일 · 32.1%</div></div>
+  </div>
+
+  <p class="lead"><b>지연 TASK는 0건</b>입니다. 계획 대비 달성률 <b>96.6%</b>로 진척 보고상 정상입니다. 다만 <b>편성 기준정보 정의 및 수집</b>(4.6.1)이 계획의 <b>39% 속도</b>로 진행 중이며, 현 속도가 유지되면 계획종료일 2026-09-25에 <b>41%</b>에서 멈춥니다. <b>아직 만회 여력이 있는 시점</b>입니다.</p>
+
+  <div class="kpis">
+    <div class="kpi"><div class="kpi-k">진척률</div><div class="kpi-v">17.0<span style="font-size:12px">%</span></div>
+      <div class="kpi-s">계획 17.6% · 편차 -0.6%p</div></div>
+    <div class="kpi"><div class="kpi-k">계획 대비 달성률</div>
+      <div class="kpi-v" style="color:var(--warn)">96.6<span style="font-size:12px">%</span></div>
+      <div class="kpi-s">실적 ÷ 계획</div></div>
+    <div class="kpi"><div class="kpi-k">지연 TASK</div>
+      <div class="kpi-v" style="color:var(--ok)">0<span style="font-size:12px">건</span></div>
+      <div class="kpi-s">누적 0일</div></div>
+    <div class="kpi"><div class="kpi-k">선행 경고</div>
+      <div class="kpi-v" style="color:var(--warn)">2<span style="font-size:12px">건</span></div>
+      <div class="kpi-s">5영업일 초과 미결</div></div>
+  </div>
+
+  <div class="st"><i>01</i> 지금 조치할 때와 아닐 때<span class="note">오픈 12-04 · 변경 동결 12-14</span></div>
+  <div class="fork">
+    <div class="br no"><div class="br-h"><span class="tag">A</span> 지금 조치하지 않으면</div>
+      <div class="br-b"><div class="step"><span class="d">현재</span><span>4.6.1 계획 대비 39% 속도</span></div><div class="step"><span class="d">09-25</span><span>계획종료 시점 41% 예상</span></div><div class="step key"><span class="d">이후</span><span>후속 공정 착수 불가 → 지연 전환</span></div><div class="step"><span class="d">결과</span><span>설계 지연이 구현으로 전파</span></div></div><div class="br-f">지연 발생 후 만회는 비용이 든다</div></div>
+    <div class="br yes"><div class="br-h"><span class="tag">B</span> 지금 조치하면</div>
+      <div class="br-b"><div class="step"><span class="d">즉시</span><span>회신 독려 · 진척 사유 확인</span></div><div class="step"><span class="d">차주</span><span>주간회의 정식 안건 상정</span></div><div class="step key"><span class="d">2주 내</span><span>미회복 시 공수 보강 판단</span></div><div class="step"><span class="d">12-04</span><span>오픈 목표 · 동결 12-14 전</span></div></div><div class="br-f">계획 일정 유지 · 지연 0일</div></div>
+  </div>
+
+  <div class="st"><i>02</i> 결재 · 요청 사항</div>
+  <div class="asks"><div class="ask-h">현업 결정이 필요한 안건</div>
+    <table><thead><tr><th style="width:36px">우선</th><th>안건</th>
+      <th class="num" style="width:56px">잔여</th><th style="width:96px">결정 주체</th></tr></thead>
+      <tbody><tr><td><span class="pri">1순위</span></td><td><b>편성 기준정보 정의 및 수집 진척 회복</b><small>4.6.1 · 담당 새벽 · 현재 11.6% / 계획 30.0% · 남은 28일에 88%p 필요. 회신 독려와 진척 사유 확인이 먼저입니다.</small></td><td class="num">28일</td><td>고객 점포운영팀</td></tr><tr><td><span class="pri n">2순위</span></td><td><b>미결사항 결정</b><small>MT-2026-023 · 부문 표준 코드 매핑 기준 (결정필요일 2026-08-21 / 결정권자: 고객 점포운영팀)</small></td><td class="num">—</td><td>고객 현업</td></tr><tr><td><span class="pri n">2순위</span></td><td><b>미결사항 결정</b><small>MT-2026-024 · 부문 표준 코드 매핑 기준 이월 (결정필요일 2026-08-21 / 결정권자: 고객 점포운영팀)</small></td><td class="num">—</td><td>고객 현업</td></tr></tbody></table></div>
+
+  <div class="close">
+    <div class="verdict"><b>지연이 아직 0건이라는 것이 이 보고의 요점입니다.</b> 지연으로 잡히는 시점에는 이미 만회 비용이 발생합니다. 선행 지표(미결·진척 속도)는 지연보다 3~5주 먼저 움직이며, 지금이 그 구간입니다.<br>상세 근거는 같은 기준일의 실무 리포트(index.html)에 있습니다.</div>
+    <div class="wkt"><table>
+      <thead><tr><th>기준일</th><th class="num">달성률</th><th class="num">지연</th><th class="num">미결</th><th class="num">5일↑</th></tr></thead>
+      <tbody><tr><td class="mono">07-24</td><td class="num">100.0%</td><td class="num">0건</td><td class="num">0</td><td class="num">0</td></tr><tr><td class="mono">07-31</td><td class="num">100.0%</td><td class="num">0건</td><td class="num">0</td><td class="num">0</td></tr><tr><td class="mono">08-07</td><td class="num">100.0%</td><td class="num">0건</td><td class="num">0</td><td class="num">0</td></tr><tr><td class="mono">08-14</td><td class="num">99.1%</td><td class="num">0건</td><td class="num">1</td><td class="num">0</td></tr><tr><td class="mono">08-21</td><td class="num">97.1%</td><td class="num">0건</td><td class="num">2</td><td class="num">1</td></tr><tr class="now"><td class="mono">08-28</td><td class="num">96.6%</td><td class="num">0건</td><td class="num">2</td><td class="num">2</td></tr></tbody></table></div>
+  </div>
+
+  <footer><span>생성 2026-08-28 08:00 · 자동 배치</span>
+    <span>상세 — index.html · 주간 추이 — trend.html</span>
+    <span>데이터는 가상의 예시입니다</span></footer>
+</div>
